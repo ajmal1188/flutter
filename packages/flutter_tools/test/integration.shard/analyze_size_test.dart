@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// @dart = 2.8
-
 import 'package:file/file.dart';
 import 'package:file_testing/file_testing.dart';
 import 'package:flutter_tools/src/base/io.dart';
@@ -28,7 +26,7 @@ void main() {
       'build',
       'apk',
       '--analyze-size',
-      '--target-platform=android-arm64'
+      '--target-platform=android-arm64',
     ], workingDirectory: workingDirectory);
 
     printOnFailure('Output of flutter build apk:');
@@ -167,7 +165,7 @@ void main() {
       'apk',
       '--analyze-size',
       '--target-platform=android-arm64',
-      '--split-debug-info=infos'
+      '--split-debug-info=infos',
     ], workingDirectory: fileSystem.path.join(getFlutterRoot(), 'examples', 'hello_world'));
 
     expect(result.stderr.toString(), contains('"--analyze-size" cannot be combined with "--split-debug-info"'));

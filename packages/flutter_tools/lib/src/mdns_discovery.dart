@@ -110,7 +110,7 @@ class MDnsObservatoryDiscovery {
         return null;
       }
       if (srv.length > 1) {
-        _logger.printError('Unexpectedly found more than one observatory report for $domainName '
+        _logger.printWarning('Unexpectedly found more than one observatory report for $domainName '
                    '- using first one (${srv.first.port}).');
       }
       _logger.printTrace('Checking for authentication code for $domainName');
@@ -145,7 +145,7 @@ class MDnsObservatoryDiscovery {
     }
   }
 
-  Future<Uri?> getObservatoryUri(String applicationId, Device device, {
+  Future<Uri?> getObservatoryUri(String? applicationId, Device device, {
     bool usesIpv6 = false,
     int? hostVmservicePort,
     int? deviceVmservicePort,
@@ -217,7 +217,6 @@ class MDnsObservatoryDiscovery {
       case TargetPlatform.linux_x64:
       case TargetPlatform.tester:
       case TargetPlatform.web_javascript:
-      case TargetPlatform.windows_uwp_x64:
       case TargetPlatform.windows_x64:
         _logger.printTrace('No interface with an ipv4 link local address was found.');
         break;

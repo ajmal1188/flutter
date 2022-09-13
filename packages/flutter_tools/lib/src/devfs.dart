@@ -95,7 +95,7 @@ class DevFSFileContent extends DevFSContent {
       if (fileStat.type == FileSystemEntityType.notFound) {
         _fileStat = null;
         _linkTarget = null;
-      } else if (devFSConfig?.cacheSymlinks == true) {
+      } else if (devFSConfig?.cacheSymlinks ?? false) {
         _linkTarget = linkTarget;
       }
     }
@@ -477,7 +477,7 @@ class DevFS {
   final StopwatchFactory _stopwatchFactory;
 
   final String fsName;
-  final Directory rootDirectory;
+  final Directory? rootDirectory;
   final Set<String> assetPathsToEvict = <String>{};
 
   // A flag to indicate whether we have called `setAssetDirectory` on the target device.
@@ -497,7 +497,7 @@ class DevFS {
     final String baseUriString = baseUri.toString();
     if (deviceUriString.startsWith(baseUriString)) {
       final String deviceUriSuffix = deviceUriString.substring(baseUriString.length);
-      return rootDirectory.uri.resolve(deviceUriSuffix);
+      return rootDirectory!.uri.resolve(deviceUriSuffix);
     }
     return deviceUri;
   }
@@ -616,6 +616,12 @@ class DevFS {
     });
 
     if (bundle != null) {
+      // Mark processing of bundle started for testability of starting the compile
+      // before processing bundle.
+      _logger.printTrace('Processing bundle.');
+      // await null to give time for telling the compiler to compile.
+      await null;
+
       // The tool writes the assets into the AssetBundle working dir so that they
       // are in the same location in DevFS and the iOS simulator.
       final String assetBuildDirPrefix = _asUriPath(getAssetBuildDirectory());
@@ -636,6 +642,10 @@ class DevFS {
           assetPathsToEvict.add(archivePath);
         }
       });
+
+      // Mark processing of bundle done for testability of starting the compile
+      // before processing bundle.
+      _logger.printTrace('Bundle processing done.');
     }
     final CompilerOutput? compilerOutput = await pendingCompilerOutput;
     if (compilerOutput == null || compilerOutput.errorCount > 0) {

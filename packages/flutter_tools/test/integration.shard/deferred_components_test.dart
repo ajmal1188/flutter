@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// @dart = 2.8
-
 import 'package:archive/archive.dart';
 import 'package:file/file.dart';
 import 'package:file_testing/file_testing.dart';
@@ -14,17 +12,18 @@ import 'test_data/deferred_components_project.dart';
 import 'test_driver.dart';
 import 'test_utils.dart';
 
+
 void main() {
-  Directory tempDir;
-  FlutterRunTestDriver _flutter;
+  late Directory tempDir;
+  late FlutterRunTestDriver flutter;
 
   setUp(() async {
     tempDir = createResolvedTempDirectorySync('run_test.');
-    _flutter = FlutterRunTestDriver(tempDir);
+    flutter = FlutterRunTestDriver(tempDir);
   });
 
   tearDown(() async {
-    await _flutter.stop();
+    await flutter.stop();
     tryToDelete(tempDir);
   });
 
@@ -37,9 +36,11 @@ void main() {
       ...getLocalEngineArguments(),
       'build',
       'appbundle',
-      '--target-platform=android-arm64'
+      '--target-platform=android-arm64',
     ], workingDirectory: tempDir.path);
 
+    printOnFailure('stdout:\n${result.stdout}');
+    printOnFailure('stderr:\n${result.stderr}');
     expect(result.exitCode, 0);
     expect(result.stdout.toString(), contains('app-release.aab'));
     expect(result.stdout.toString(), contains('Deferred components prebuild validation passed.'));
@@ -74,6 +75,8 @@ void main() {
       'appbundle',
     ], workingDirectory: tempDir.path);
 
+    printOnFailure('stdout:\n${result.stdout}');
+    printOnFailure('stderr:\n${result.stderr}');
     expect(result.stdout.toString(), contains('app-release.aab'));
     expect(result.stdout.toString(), contains('Deferred components prebuild validation passed.'));
     expect(result.stdout.toString(), contains('Deferred components gen_snapshot validation passed.'));
@@ -115,9 +118,11 @@ void main() {
       ...getLocalEngineArguments(),
       'build',
       'appbundle',
-      '--no-deferred-components'
+      '--no-deferred-components',
     ], workingDirectory: tempDir.path);
 
+    printOnFailure('stdout:\n${result.stdout}');
+    printOnFailure('stderr:\n${result.stderr}');
     expect(result.stdout.toString().contains('app-release.aab'), true);
     expect(result.stdout.toString().contains('Deferred components prebuild validation passed.'), false);
     expect(result.stdout.toString().contains('Deferred components gen_snapshot validation passed.'), false);
@@ -164,6 +169,8 @@ void main() {
       '--no-validate-deferred-components',
     ], workingDirectory: tempDir.path);
 
+    printOnFailure('stdout:\n${result.stdout}');
+    printOnFailure('stderr:\n${result.stderr}');
     expect(result.stdout.toString().contains('app-release.aab'), true);
     expect(result.stdout.toString().contains('Deferred components prebuild validation passed.'), false);
     expect(result.stdout.toString().contains('Deferred components gen_snapshot validation passed.'), false);

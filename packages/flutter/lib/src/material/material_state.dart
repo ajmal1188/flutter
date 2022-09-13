@@ -19,6 +19,7 @@ import 'input_border.dart';
 ///
 ///  * [MaterialStateProperty], an interface for objects that "resolve" to
 ///    different values depending on a widget's material state.
+/// {@template flutter.material.MaterialStateProperty.implementations}
 ///  * [MaterialStateColor], a [Color] that implements `MaterialStateProperty`
 ///    which is used in APIs that need to accept either a [Color] or a
 ///    `MaterialStateProperty<Color>`.
@@ -28,10 +29,19 @@ import 'input_border.dart';
 ///  * [MaterialStateOutlinedBorder], an [OutlinedBorder] that implements
 ///    `MaterialStateProperty` which is used in APIs that need to accept either
 ///    an [OutlinedBorder] or a [MaterialStateProperty<OutlinedBorder>].
+///  * [MaterialStateOutlineInputBorder], an [OutlineInputBorder] that implements
+///    `MaterialStateProperty` which is used in APIs that need to accept either
+///    an [OutlineInputBorder] or a [MaterialStateProperty<OutlineInputBorder>].
+///  * [MaterialStateUnderlineInputBorder], an [UnderlineInputBorder] that implements
+///    `MaterialStateProperty` which is used in APIs that need to accept either
+///    an [UnderlineInputBorder] or a [MaterialStateProperty<UnderlineInputBorder>].
 ///  * [MaterialStateBorderSide], a [BorderSide] that implements
 ///    `MaterialStateProperty` which is used in APIs that need to accept either
 ///    a [BorderSide] or a [MaterialStateProperty<BorderSide>].
-
+///  * [MaterialStateTextStyle], a [TextStyle] that implements
+///    `MaterialStateProperty` which is used in APIs that need to accept either
+///    a [TextStyle] or a [MaterialStateProperty<TextStyle>].
+/// {@endtemplate}
 enum MaterialState {
   /// The state when the user drags their mouse cursor over the given widget.
   ///
@@ -139,7 +149,7 @@ typedef MaterialPropertyResolver<T> = T Function(Set<MaterialState> states);
 abstract class MaterialStateColor extends Color implements MaterialStateProperty<Color> {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
-  const MaterialStateColor(int defaultValue) : super(defaultValue);
+  const MaterialStateColor(super.defaultValue);
 
   /// Creates a [MaterialStateColor] from a [MaterialPropertyResolver<Color>]
   /// callback function.
@@ -551,7 +561,7 @@ abstract class MaterialStateUnderlineInputBorder extends UnderlineInputBorder im
   /// Creates a [MaterialStateUnderlineInputBorder] from a [MaterialPropertyResolver<InputBorder>]
   /// callback function.
   ///
-  /// If used as a regular ionput bortder, the border resolved in the default state (the
+  /// If used as a regular input border, the border resolved in the default state (the
   /// empty set of states) will be used.
   ///
   /// The given callback parameter must return a non-null text style in the default
@@ -611,12 +621,7 @@ class _MaterialStateUnderlineInputBorder extends MaterialStateUnderlineInputBord
 ///
 /// See also:
 ///
-///  * [MaterialStateColor], a [Color] that implements `MaterialStateProperty`
-///    which is used in APIs that need to accept either a [Color] or a
-///    `MaterialStateProperty<Color>`.
-///  * [MaterialStateMouseCursor], a [MouseCursor] that implements `MaterialStateProperty`
-///    which is used in APIs that need to accept either a [MouseCursor] or a
-///    [MaterialStateProperty<MouseCursor>].
+/// {@macro flutter.material.MaterialStateProperty.implementations}
 abstract class MaterialStateProperty<T> {
 
   /// Returns a value of type `T` that depends on [states].
@@ -646,7 +651,43 @@ abstract class MaterialStateProperty<T> {
 
   /// Convenience method for creating a [MaterialStateProperty] that resolves
   /// to a single value for all states.
-  static MaterialStateProperty<T> all<T>(T value) => _MaterialStatePropertyAll<T>(value);
+  ///
+  /// If you need a const value, use [MaterialStatePropertyAll] directly.
+  ///
+  // TODO(darrenaustin): Deprecate this when we have the ability to create
+  // a dart fix that will replace this with MaterialStatePropertyAll:
+  // https://github.com/dart-lang/sdk/issues/49056.
+  static MaterialStateProperty<T> all<T>(T value) => MaterialStatePropertyAll<T>(value);
+
+  /// Linearly interpolate between two [MaterialStateProperty]s.
+  static MaterialStateProperty<T?>? lerp<T>(
+    MaterialStateProperty<T>? a,
+    MaterialStateProperty<T>? b,
+    double t,
+    T? Function(T?, T?, double) lerpFunction,
+  ) {
+    // Avoid creating a _LerpProperties object for a common case.
+    if (a == null && b == null) {
+      return null;
+    }
+    return _LerpProperties<T>(a, b, t, lerpFunction);
+  }
+}
+
+class _LerpProperties<T> implements MaterialStateProperty<T?> {
+  const _LerpProperties(this.a, this.b, this.t, this.lerpFunction);
+
+  final MaterialStateProperty<T>? a;
+  final MaterialStateProperty<T>? b;
+  final double t;
+  final T? Function(T?, T?, double) lerpFunction;
+
+  @override
+  T? resolve(Set<MaterialState> states) {
+    final T? resolvedA = a?.resolve(states);
+    final T? resolvedB = b?.resolve(states);
+    return lerpFunction(resolvedA, resolvedB, t);
+  }
 }
 
 class _MaterialStatePropertyWith<T> implements MaterialStateProperty<T> {
@@ -658,14 +699,43 @@ class _MaterialStatePropertyWith<T> implements MaterialStateProperty<T> {
   T resolve(Set<MaterialState> states) => _resolve(states);
 }
 
-class _MaterialStatePropertyAll<T> implements MaterialStateProperty<T> {
-  _MaterialStatePropertyAll(this.value);
+/// Convenience class for creating a [MaterialStateProperty] that
+/// resolves to the given value for all states.
+class MaterialStatePropertyAll<T> implements MaterialStateProperty<T> {
 
+  /// Constructs a [MaterialStateProperty] that always resolves to the given
+  /// value.
+  const MaterialStatePropertyAll(this.value);
+
+  /// The value of the property that will be used for all states.
   final T value;
 
   @override
   T resolve(Set<MaterialState> states) => value;
 
   @override
-  String toString() => 'MaterialStateProperty.all($value)';
+  String toString() => 'MaterialStatePropertyAll($value)';
+}
+
+/// Manages a set of [MaterialState]s and notifies listeners of changes.
+///
+/// Used by widgets that expose their internal state for the sake of
+/// extensions that add support for additional states. See
+/// [TextButton.statesController] for example.
+///
+/// The controller's [value] is its current set of states. Listeners
+/// are notified whenever the [value] changes. The [value] should only be
+/// changed with [update]; it should not be modified directly.
+class MaterialStatesController extends ValueNotifier<Set<MaterialState>> {
+  /// Creates a MaterialStatesController.
+  MaterialStatesController([Set<MaterialState>? value]) : super(<MaterialState>{...?value});
+
+  /// Adds [state] to [value] if [add] is true, and removes it otherwise,
+  /// and notifies listeners if [value] has changed.
+  void update(MaterialState state, bool add) {
+    final bool valueChanged = add ? value.add(state) : value.remove(state);
+    if (valueChanged) {
+      notifyListeners();
+    }
+  }
 }

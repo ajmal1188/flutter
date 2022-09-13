@@ -11,7 +11,7 @@ import 'base/logger.dart';
 import 'build_info.dart';
 import 'convert.dart';
 import 'device.dart';
-import 'globals_null_migrated.dart' as globals;
+import 'globals.dart' as globals;
 
 Future<String?> sharedSkSlWriter(Device device, Map<String, Object> data, {
   File? outputFile,
@@ -54,7 +54,6 @@ Future<String?> sharedSkSlWriter(Device device, Map<String, Object> data, {
     case TargetPlatform.linux_x64:
     case TargetPlatform.tester:
     case TargetPlatform.web_javascript:
-    case TargetPlatform.windows_uwp_x64:
     case TargetPlatform.windows_x64:
       break;
   }

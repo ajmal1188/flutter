@@ -12,6 +12,20 @@ void main() {
     return Text(snapshot.toString(), textDirection: TextDirection.ltr);
   }
   group('AsyncSnapshot', () {
+    test('requiring data preserves the stackTrace', () {
+      final StackTrace originalStackTrace = StackTrace.current;
+
+      try {
+        AsyncSnapshot<String>.withError(
+          ConnectionState.done,
+          Error(),
+          originalStackTrace,
+        ).requireData;
+        fail('requireData did not throw');
+      } catch (error, stackTrace) {
+        expect(stackTrace, originalStackTrace);
+      }
+    });
     test('requiring data succeeds if data is present', () {
       expect(
         const AsyncSnapshot<String>.withData(ConnectionState.done, 'hello').requireData,
@@ -377,7 +391,7 @@ Future<void> eventFiring(WidgetTester tester) async {
 }
 
 class StringCollector extends StreamBuilderBase<String, List<String>> {
-  const StringCollector({ Key? key, Stream<String>? stream }) : super(key: key, stream: stream);
+  const StringCollector({ super.key, super.stream });
 
   @override
   List<String> initial() => <String>[];

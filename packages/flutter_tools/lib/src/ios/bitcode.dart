@@ -8,7 +8,7 @@ import '../base/context.dart';
 import '../base/process.dart';
 import '../base/version.dart';
 import '../build_info.dart';
-import '../globals_null_migrated.dart' as globals;
+import '../globals.dart' as globals;
 import '../macos/xcode.dart';
 
 const bool kBitcodeEnabledDefault = false;
@@ -27,7 +27,7 @@ Future<void> validateBitcode(BuildMode buildMode, TargetPlatform targetPlatform,
   final String? clangVersion = clangResult?.stdout.split('\n').first;
   final String? engineClangVersion = flutterFrameworkPath == null
       ? null
-      : globals.plistParser.getValueFromFile(
+      : globals.plistParser.getStringValueFromFile(
           globals.fs.path.join(flutterFrameworkPath, 'Info.plist'),
           'ClangVersion',
         );
@@ -46,21 +46,21 @@ Future<void> validateBitcode(BuildMode buildMode, TargetPlatform targetPlatform,
 
 Version _parseVersionFromClang(String? clangVersion) {
   final RegExp pattern = RegExp(r'Apple (LLVM|clang) version (\d+\.\d+\.\d+) ');
-  Never _invalid() {
+  Never invalid() {
     throwToolExit('Unable to parse Clang version from "$clangVersion". '
                   'Expected a string like "Apple (LLVM|clang) #.#.# (clang-####.#.##.#)".');
   }
 
   if (clangVersion == null || clangVersion.isEmpty) {
-    _invalid();
+    invalid();
   }
   final RegExpMatch? match = pattern.firstMatch(clangVersion);
   if (match == null || match.groupCount != 2) {
-    _invalid();
+    invalid();
   }
   final Version? version = Version.parse(match.group(2));
   if (version == null) {
-    _invalid();
+    invalid();
   }
   return version;
 }

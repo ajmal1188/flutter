@@ -7,7 +7,6 @@ import 'dart:async';
 import 'package:process/process.dart';
 
 import '../artifacts.dart';
-import '../base/common.dart';
 import '../base/io.dart';
 import '../base/logger.dart';
 import '../base/platform.dart';
@@ -15,7 +14,7 @@ import '../base/process.dart';
 import '../build_info.dart';
 import '../cache.dart';
 import '../convert.dart';
-import '../globals_null_migrated.dart' as globals;
+import '../globals.dart' as globals;
 import '../ios/devices.dart';
 import '../ios/ios_deploy.dart';
 import '../ios/iproxy.dart';
@@ -186,11 +185,11 @@ class XCDevice {
           final String identifier = match.group(2)!;
           if (verb.startsWith('attach')) {
             _deviceIdentifierByEvent?.add(<XCDeviceEvent, String>{
-              XCDeviceEvent.attach: identifier
+              XCDeviceEvent.attach: identifier,
             });
           } else if (verb.startsWith('detach')) {
             _deviceIdentifierByEvent?.add(<XCDeviceEvent, String>{
-              XCDeviceEvent.detach: identifier
+              XCDeviceEvent.detach: identifier,
             });
           }
         }
@@ -206,7 +205,7 @@ class XCDevice {
         unawaited(stdoutSubscription.cancel());
         unawaited(stderrSubscription.cancel());
       }).whenComplete(() async {
-        if (_deviceIdentifierByEvent?.hasListener == true) {
+        if (_deviceIdentifierByEvent?.hasListener ?? false) {
           // Tell listeners the process died.
           await _deviceIdentifierByEvent?.close();
         }
@@ -355,7 +354,10 @@ class XCDevice {
     return error is Map<String, Object?> ? error : null;
   }
 
-  static int? _errorCode(Map<String, Object?> errorProperties) {
+  static int? _errorCode(Map<String, Object?>? errorProperties) {
+    if (errorProperties == null) {
+      return null;
+    }
     final Object? code = errorProperties['code'];
     return code is int ? code : null;
   }
@@ -415,7 +417,7 @@ class XCDevice {
         } else {
           cpuArchitecture = DarwinArch.arm64;
         }
-        _logger.printError(
+        _logger.printWarning(
           'Unknown architecture $architecture, defaulting to '
           '${getNameForDarwinArch(cpuArchitecture)}',
         );
@@ -522,6 +524,14 @@ class XCDevice {
       final Map<String, Object?>? errorProperties = _errorProperties(deviceProperties);
       final String? errorMessage = _parseErrorMessage(errorProperties);
       if (errorMessage != null) {
+        final int? code = _errorCode(errorProperties);
+        // Error -13: iPhone is not connected. Xcode will continue when iPhone is connected.
+        // This error is confusing since the device is not connected and maybe has not been connected
+        // for a long time. Avoid showing it.
+        if (code == -13 && errorMessage.contains('not connected')) {
+          continue;
+        }
+
         diagnostics.add(errorMessage);
       }
     }

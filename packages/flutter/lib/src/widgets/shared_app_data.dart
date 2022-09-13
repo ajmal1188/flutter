@@ -2,7 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 import 'package:flutter/foundation.dart';
+=======
+>>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
 
 import 'framework.dart';
 import 'inherited_model.dart';
@@ -75,7 +78,11 @@ class SharedAppData extends StatefulWidget {
   /// rebuilds with [SharedAppData.setValue].
   ///
   /// This widget is automatically created by the [WidgetsApp].
+<<<<<<< HEAD
   const SharedAppData({ Key? key, required this.child }) : super(key: key);
+=======
+  const SharedAppData({ super.key, required this.child });
+>>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
 
   /// The widget below this widget in the tree.
   ///
@@ -167,7 +174,11 @@ class _SharedAppDataState extends State<SharedAppData> {
   void setValue<K extends Object, V>(K key, V value) {
     if (data[key] != value) {
       setState(() {
+<<<<<<< HEAD
         data = Map<Object, Object?>.from(data);
+=======
+        data = Map<Object, Object?>.of(data);
+>>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
         data[key] = value;
       });
     }
@@ -176,10 +187,16 @@ class _SharedAppDataState extends State<SharedAppData> {
 
 class _SharedAppModel extends InheritedModel<Object> {
   _SharedAppModel({
+<<<<<<< HEAD
     Key? key,
     required this.sharedAppDataState,
     required Widget child
   }) : data = sharedAppDataState.data, super(key: key, child: child);
+=======
+    required this.sharedAppDataState,
+    required super.child
+  }) : data = sharedAppDataState.data;
+>>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
 
   final _SharedAppDataState sharedAppDataState;
   final Map<Object, Object?> data;

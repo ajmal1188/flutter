@@ -10,7 +10,7 @@ import 'package:flutter_tools/src/base/io.dart';
 import 'package:flutter_tools/src/base/logger.dart';
 import 'package:flutter_tools/src/base/platform.dart';
 import 'package:flutter_tools/src/base/terminal.dart';
-import 'package:flutter_tools/src/globals_null_migrated.dart' as globals;
+import 'package:flutter_tools/src/globals.dart' as globals;
 import 'package:flutter_tools/src/ios/code_signing.dart';
 
 import '../../src/common.dart';
@@ -174,7 +174,7 @@ void main() {
           stdin: IOSink(controller.sink),
           stdout: 'subject= /CN=iPhone Developer: Profile 1 (1111AAAA11)/OU=3333CCCC33/O=My Team/C=US',
           completer: completer,
-        )
+        ),
       ]);
 
       // Verify that certificate value is passed into openssl command.
@@ -228,7 +228,7 @@ void main() {
           stdin: IOSink(controller.sink),
           stdout: 'subject= /CN=iPhone Developer: Profile 1 (1111AAAA11)/OU=3333CCCC33/O=My Team/C=US',
           completer: completer,
-        )
+        ),
       ]);
 
       // Verify that certificate value is passed into openssl command.
@@ -279,7 +279,7 @@ void main() {
           stdin: IOSink(controller.sink),
           stdout: 'subject= /CN=iPhone Developer: Profile 1 (1111AAAA11)/OU=3333CCCC33/O=My Team/C=US',
           completer: completer,
-        )
+        ),
       ]);
 
       // Verify that certificate value is passed into openssl command.
@@ -328,7 +328,7 @@ void main() {
           stdin: IOSink(controller.sink),
           stdout: 'subject= /CN=iPhone Developer: Profile 3 (3333CCCC33)/OU=4444DDDD44/O=My Team/C=US',
           completer: completer,
-        )
+        ),
       ]);
 
       // Verify that certificate value is passed into openssl command.
@@ -385,7 +385,7 @@ void main() {
           stdin: IOSink(controller.sink),
           stdout: 'subject= /CN=iPhone Developer: Profile 3 (1111AAAA11)/OU=5555EEEE55/O=My Team/C=US',
           completer: completer,
-        )
+        ),
       ]);
 
       // Verify that certificate value is passed into openssl command.
@@ -437,7 +437,7 @@ void main() {
           stdin: IOSink(controller.sink),
           stdout: 'subject= /CN=iPhone Developer: Profile 3 (3333CCCC33)/OU=4444DDDD44/O=My Team/C=US',
           completer: completer,
-        )
+        ),
       ]);
 
       // Verify that certificate value is passed into openssl command.
@@ -494,7 +494,7 @@ void main() {
           stdin: IOSink(controller.sink),
           stdout: 'subject= /CN=iPhone Developer: Profile 3 (3333CCCC33)/OU=4444DDDD44/O=My Team/C=US',
           completer: completer,
-        )
+        ),
       ]);
 
       // Verify that certificate value is passed into openssl command.

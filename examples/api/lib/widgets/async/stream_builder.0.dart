@@ -4,12 +4,14 @@
 
 // Flutter code sample for StreamBuilder
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   static const String _title = 'Flutter Code Sample';
 
@@ -23,17 +25,24 @@ class MyApp extends StatelessWidget {
 }
 
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+  const MyStatefulWidget({super.key});
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  final Stream<int> _bids = (() async* {
-    await Future<void>.delayed(const Duration(seconds: 1));
-    yield 1;
-    await Future<void>.delayed(const Duration(seconds: 1));
+  final Stream<int> _bids = (() {
+    late final StreamController<int> controller;
+    controller = StreamController<int>(
+      onListen: () async {
+        await Future<void>.delayed(const Duration(seconds: 1));
+        controller.add(1);
+        await Future<void>.delayed(const Duration(seconds: 1));
+        await controller.close();
+      },
+    );
+    return controller.stream;
   })();
 
   @override
@@ -76,7 +85,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     Padding(
                       padding: EdgeInsets.only(top: 16),
                       child: Text('Select a lot'),
-                    )
+                    ),
                   ];
                   break;
                 case ConnectionState.waiting:
@@ -89,7 +98,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     Padding(
                       padding: EdgeInsets.only(top: 16),
                       child: Text('Awaiting bids...'),
-                    )
+                    ),
                   ];
                   break;
                 case ConnectionState.active:
@@ -102,7 +111,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Text('\$${snapshot.data}'),
-                    )
+                    ),
                   ];
                   break;
                 case ConnectionState.done:
@@ -115,7 +124,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Text('\$${snapshot.data} (closed)'),
-                    )
+                    ),
                   ];
                   break;
               }

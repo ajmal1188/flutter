@@ -5,23 +5,45 @@
 import 'package:args/args.dart';
 
 import 'proto/conductor_state.pb.dart' as pb;
+import 'repository.dart';
 
 const String gsutilBinary = 'gsutil.py';
 
-const List<String> kReleaseChannels = <String>[
-  'stable',
-  'beta',
-  'dev',
-  'master',
-];
+const String kFrameworkDefaultBranch = 'master';
+const String kForceFlag = 'force';
+
+const List<String> kBaseReleaseChannels = <String>['stable', 'beta'];
+
+const List<String> kReleaseChannels = <String>[...kBaseReleaseChannels, FrameworkRepository.defaultBranch];
 
 const String kReleaseDocumentationUrl = 'https://github.com/flutter/flutter/wiki/Flutter-Cherrypick-Process';
 
 const String kLuciPackagingConsoleLink = 'https://ci.chromium.org/p/flutter/g/packaging/console';
 
+const String kWebsiteReleasesUrl = 'https://docs.flutter.dev/development/tools/sdk/releases';
+
+const String discordReleaseChannel =
+    'https://discord.com/channels/608014603317936148/783492179922124850';
+
+const String flutterReleaseHotline =
+    'https://mail.google.com/chat/u/0/#chat/space/AAAA6RKcK2k';
+
+const String hotfixToStableWiki =
+    'https://github.com/flutter/flutter/wiki/Hotfixes-to-the-Stable-Channel';
+
+const String flutterAnnounceGroup =
+    'https://groups.google.com/g/flutter-announce';
+
+const String hotfixDocumentationBestPractices =
+    'https://github.com/flutter/flutter/wiki/Hotfix-Documentation-Best-Practices';
+
 final RegExp releaseCandidateBranchRegex = RegExp(
   r'flutter-(\d+)\.(\d+)-candidate\.(\d+)',
 );
+
+/// Whether all releases published to the beta channel should be mirrored to
+/// dev.
+const bool kSynchronizeDevWithBeta = true;
 
 /// Cast a dynamic to String and trim.
 String stdoutToString(dynamic input) {
@@ -74,9 +96,20 @@ String? getValueFromEnvOrArgs(
   if (allowNull) {
     return null;
   }
-  throw ConductorException(
-    'Expected either the CLI arg --$name or the environment variable $envName '
-    'to be provided!');
+  throw ConductorException('Expected either the CLI arg --$name or the environment variable $envName '
+      'to be provided!');
+}
+
+bool getBoolFromEnvOrArgs(
+  String name,
+  ArgResults argResults,
+  Map<String, String> env,
+) {
+  final String envName = fromArgToEnvName(name);
+  if (env[envName] != null) {
+    return (env[envName]?.toUpperCase()) == 'TRUE';
+  }
+  return argResults[name] as bool;
 }
 
 /// Return multiple values from the environment or fall back to [argResults].
@@ -102,9 +135,8 @@ List<String> getValuesFromEnvOrArgs(
     return argValues;
   }
 
-  throw ConductorException(
-    'Expected either the CLI arg --$name or the environment variable $envName '
-    'to be provided!');
+  throw ConductorException('Expected either the CLI arg --$name or the environment variable $envName '
+      'to be provided!');
 }
 
 /// Translate CLI arg names to env variable names.

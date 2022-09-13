@@ -11,10 +11,10 @@ import 'package:flutter_tools/src/convert.dart';
 import 'package:flutter_tools/src/doctor_validator.dart';
 import 'package:flutter_tools/src/intellij/intellij_validator.dart';
 import 'package:flutter_tools/src/ios/plist_parser.dart';
-import 'package:test/fake.dart';
 
 import '../../src/common.dart';
 import '../../src/fake_process_manager.dart';
+import '../../src/fakes.dart';
 
 final Platform macPlatform = FakePlatform(
   operatingSystem: 'macos',
@@ -22,7 +22,7 @@ final Platform macPlatform = FakePlatform(
 );
 final Platform linuxPlatform = FakePlatform(
   environment: <String, String>{
-    'HOME': '/foo/bar'
+    'HOME': '/foo/bar',
   },
 );
 final Platform windowsPlatform = FakePlatform(
@@ -30,7 +30,7 @@ final Platform windowsPlatform = FakePlatform(
   environment: <String, String>{
     'USERPROFILE': r'C:\Users\foo',
     'APPDATA': r'C:\Users\foo\AppData\Roaming',
-    'LOCALAPPDATA': r'C:\Users\foo\AppData\Local'
+    'LOCALAPPDATA': r'C:\Users\foo\AppData\Local',
   },
 );
 
@@ -49,7 +49,7 @@ void main() {
       ValidationMessage.error('Flutter plugin version 0.1.3 - the recommended minimum version is 16.0.0'),
       ValidationMessage('Dart plugin version 162.2485'),
       ValidationMessage('For information about installing plugins, see\n'
-          'https://flutter.dev/intellij-setup/#installing-the-plugins')
+          'https://flutter.dev/intellij-setup/#installing-the-plugins'),
     ]);
   });
 
@@ -373,20 +373,9 @@ void main() {
   });
 }
 
-class FakePlistParser extends Fake implements PlistParser {
-  FakePlistParser(this.values);
-
-  final Map<String, String> values;
-
-  @override
-  String? getValueFromFile(String plistFilePath, String key) {
-    return values[key];
-  }
-}
-
 class IntelliJValidatorTestTarget extends IntelliJValidator {
-  IntelliJValidatorTestTarget(String title, String installPath,  FileSystem fileSystem)
-    : super(title, installPath, fileSystem: fileSystem, userMessages: UserMessages());
+  IntelliJValidatorTestTarget(super.title, super.installPath,  FileSystem fileSystem)
+    : super(fileSystem: fileSystem, userMessages: UserMessages());
 
   @override
   String get pluginsPath => 'plugins';
