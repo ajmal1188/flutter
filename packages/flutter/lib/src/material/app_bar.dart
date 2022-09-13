@@ -173,7 +173,10 @@ class AppBar extends StatefulWidget implements PreferredSizeWidget {
     this.bottom,
     this.elevation,
     this.scrolledUnderElevation,
+<<<<<<< HEAD
     this.notificationPredicate = defaultScrollNotificationPredicate,
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     this.shadowColor,
     this.surfaceTintColor,
     this.shape,
@@ -434,6 +437,7 @@ class AppBar extends StatefulWidget implements PreferredSizeWidget {
   ///    shadow.
   final double? scrolledUnderElevation;
 
+<<<<<<< HEAD
   /// A check that specifies which child's [ScrollNotification]s should be
   /// listened to.
   ///
@@ -441,6 +445,8 @@ class AppBar extends StatefulWidget implements PreferredSizeWidget {
   /// else for more complicated layouts.
   final ScrollNotificationPredicate notificationPredicate;
 
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   /// {@template flutter.material.appbar.shadowColor}
   /// The color of the shadow below the app bar.
   ///
@@ -876,7 +882,11 @@ class _AppBarState extends State<AppBar> {
     assert(debugCheckHasMaterialLocalizations(context));
     final ThemeData theme = Theme.of(context);
     final AppBarTheme appBarTheme = AppBarTheme.of(context);
+<<<<<<< HEAD
     final AppBarTheme defaults = theme.useMaterial3 ? _AppBarDefaultsM3(context) : _AppBarDefaultsM2(context);
+=======
+    final AppBarTheme defaults = theme.useMaterial3 ? _TokenDefaultsM3(context) : _DefaultsM2(context);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     final ScaffoldState? scaffold = Scaffold.maybeOf(context);
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
 
@@ -1149,12 +1159,16 @@ class _AppBarState extends State<AppBar> {
       : widget.systemOverlayStyle
         ?? appBarTheme.systemOverlayStyle
         ?? defaults.systemOverlayStyle
+<<<<<<< HEAD
         ?? _systemOverlayStyleForBrightness(
           ThemeData.estimateBrightnessForColor(backgroundColor),
           // Make the status bar transparent for M3 so the elevation overlay
           // color is picked up by the statusbar.
           theme.useMaterial3 ? const Color(0x00000000) : null,
         );
+=======
+        ?? _systemOverlayStyleForBrightness(ThemeData.estimateBrightnessForColor(backgroundColor));
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
     return Semantics(
       container: true,
@@ -1309,7 +1323,11 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             )
           : flexibleSpace,
         bottom: bottom,
+<<<<<<< HEAD
         elevation: isScrolledUnder ? elevation : 0.0,
+=======
+        elevation: forceElevated || isScrolledUnder ? elevation : 0.0,
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
         scrolledUnderElevation: scrolledUnderElevation,
         shadowColor: shadowColor,
         surfaceTintColor: surfaceTintColor,
@@ -2162,6 +2180,7 @@ class _RenderAppBarTitleBox extends RenderAligningShiftedBox {
   }
 }
 
+<<<<<<< HEAD
 enum _ScrollUnderFlexibleVariant { medium, large }
 
 class _ScrollUnderFlexibleSpace extends StatefulWidget {
@@ -2287,6 +2306,10 @@ mixin _ScrollUnderFlexibleConfig {
 // Hand coded defaults based on Material Design 2.
 class _AppBarDefaultsM2 extends AppBarTheme {
   _AppBarDefaultsM2(this.context)
+=======
+class _DefaultsM2 extends AppBarTheme {
+  _DefaultsM2(this.context)
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     : super(
       elevation: 4.0,
       shadowColor: const Color(0xFF000000),
@@ -2314,6 +2337,7 @@ class _AppBarDefaultsM2 extends AppBarTheme {
   TextStyle? get titleTextStyle => _theme.textTheme.headline6;
 }
 
+<<<<<<< HEAD
 // BEGIN GENERATED TOKEN PROPERTIES - AppBar
 
 // Do not edit by hand. The code between the "BEGIN GENERATED" and
@@ -2325,6 +2349,17 @@ class _AppBarDefaultsM2 extends AppBarTheme {
 
 class _AppBarDefaultsM3 extends AppBarTheme {
   _AppBarDefaultsM3(this.context)
+=======
+// BEGIN GENERATED TOKEN PROPERTIES
+
+// Generated code to the end of this file. Do not edit by hand.
+// These defaults are generated from the Material Design Token
+// database by the script dev/tools/gen_defaults/bin/gen_defaults.dart.
+
+// Generated version v0_92
+class _TokenDefaultsM3 extends AppBarTheme {
+  _TokenDefaultsM3(this.context)
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     : super(
       elevation: 0.0,
       scrolledUnderElevation: 3.0,
@@ -2364,6 +2399,7 @@ class _AppBarDefaultsM3 extends AppBarTheme {
   @override
   TextStyle? get titleTextStyle => _textTheme.titleLarge;
 }
+<<<<<<< HEAD
 
 // Variant configuration
 class _MediumScrollUnderFlexibleConfig with _ScrollUnderFlexibleConfig {
@@ -2425,3 +2461,6 @@ class _LargeScrollUnderFlexibleConfig with _ScrollUnderFlexibleConfig {
 }
 
 // END GENERATED TOKEN PROPERTIES - AppBar
+=======
+// END GENERATED TOKEN PROPERTIES
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4

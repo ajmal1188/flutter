@@ -5,7 +5,11 @@
 import 'template.dart';
 
 class AppBarTemplate extends TokenTemplate {
+<<<<<<< HEAD
   const AppBarTemplate(super.blockName, super.fileName, super.tokens)
+=======
+  const AppBarTemplate(super.fileName, super.tokens)
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     : super(
       colorSchemePrefix: '_colors.',
       textThemePrefix: '_textTheme.',
@@ -13,8 +17,14 @@ class AppBarTemplate extends TokenTemplate {
 
   @override
   String generate() => '''
+<<<<<<< HEAD
 class _${blockName}DefaultsM3 extends AppBarTheme {
   _${blockName}DefaultsM3(this.context)
+=======
+// Generated version ${tokens["version"]}
+class _TokenDefaultsM3 extends AppBarTheme {
+  _TokenDefaultsM3(this.context)
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     : super(
       elevation: ${elevation('md.comp.top-app-bar.small.container')},
       scrolledUnderElevation: ${elevation('md.comp.top-app-bar.small.on-scroll.container')},
@@ -53,6 +63,7 @@ class _${blockName}DefaultsM3 extends AppBarTheme {
 
   @override
   TextStyle? get titleTextStyle => ${textStyle('md.comp.top-app-bar.small.headline')};
+<<<<<<< HEAD
 }
 
 // Variant configuration
@@ -114,4 +125,7 @@ class _LargeScrollUnderFlexibleConfig with _ScrollUnderFlexibleConfig {
   EdgeInsetsGeometry? get expandedTitlePadding => const EdgeInsets.fromLTRB(16, 0, 16, 28);
 }
 ''';
+=======
+}''';
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 }

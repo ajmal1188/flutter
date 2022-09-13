@@ -965,11 +965,19 @@ void main() {
             data: const MediaQueryData(),
             child: Center(
               child: OutlinedButton(
+<<<<<<< HEAD
                 style: const ButtonStyle(
                   // Specifying minimumSize to mimic the original minimumSize for
                   // RaisedButton so that the corresponding button size matches
                   // the original version of this test.
                   minimumSize: MaterialStatePropertyAll<Size>(Size(88, 36)),
+=======
+                style: ButtonStyle(
+                  // Specifying minimumSize to mimic the original minimumSize for
+                  // RaisedButton so that the corresponding button size matches
+                  // the original version of this test.
+                  minimumSize: MaterialStateProperty.all<Size>(const Size(88, 36)),
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
                 ),
                 onPressed: () {},
                 child: const Text('ABC'),
@@ -994,11 +1002,19 @@ void main() {
             data: const MediaQueryData(textScaleFactor: 1.3),
             child: Center(
               child: OutlinedButton(
+<<<<<<< HEAD
                 style: const ButtonStyle(
                   // Specifying minimumSize to mimic the original minimumSize for
                   // RaisedButton so that the corresponding button size matches
                   // the original version of this test.
                   minimumSize: MaterialStatePropertyAll<Size>(Size(88, 36)),
+=======
+                style: ButtonStyle(
+                  // Specifying minimumSize to mimic the original minimumSize for
+                  // RaisedButton so that the corresponding button size matches
+                  // the original version of this test.
+                  minimumSize: MaterialStateProperty.all<Size>(const Size(88, 36)),
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
                 ),
                 onPressed: () {},
                 child: const Text('ABC'),

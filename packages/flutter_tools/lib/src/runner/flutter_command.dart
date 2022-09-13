@@ -1313,7 +1313,11 @@ abstract class FlutterCommand extends Command<void> {
   Future<FlutterCommandResult> verifyThenRunCommand(String commandPath) async {
 =======
   Future<FlutterCommandResult> verifyThenRunCommand(String? commandPath) async {
+<<<<<<< HEAD
 >>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
+=======
+>>>>>>> cd41fdd495f6944ecd3506c21e94c6567b073278
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     globals.preRunValidator.validate();
     // Populate the cache. We call this before pub get below so that the
     // sky_engine package is available in the flutter cache for pub to find.

@@ -1742,6 +1742,7 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
 	      child: DefaultTextEditingActions(
                 child: FocusTraversalGroup(
                   policy: ReadingOrderTraversalPolicy(),
+<<<<<<< HEAD
 =======
               child: FocusTraversalGroup(
                 policy: ReadingOrderTraversalPolicy(),
@@ -1749,6 +1750,15 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
 >>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
                   child: child,
                 ),
+=======
+                  child: child,
+                ),
+=======
+              child: FocusTraversalGroup(
+                policy: ReadingOrderTraversalPolicy(),
+                child: child,
+>>>>>>> cd41fdd495f6944ecd3506c21e94c6567b073278
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
               ),
             ),
           ),

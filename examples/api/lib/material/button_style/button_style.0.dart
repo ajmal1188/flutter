@@ -11,7 +11,11 @@ void main() {
 }
 
 class ButtonApp extends StatelessWidget {
+<<<<<<< HEAD
   const ButtonApp({super.key});
+=======
+  const ButtonApp({Key? key}) : super(key: key);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,11 @@ class ButtonApp extends StatelessWidget {
 }
 
 class ButtonTypesExample extends StatelessWidget {
+<<<<<<< HEAD
   const ButtonTypesExample({super.key});
+=======
+  const ButtonTypesExample({Key? key}) : super(key: key);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +53,11 @@ class ButtonTypesExample extends StatelessWidget {
 }
 
 class ButtonTypesGroup extends StatelessWidget {
+<<<<<<< HEAD
   const ButtonTypesGroup({ super.key, required this.enabled });
+=======
+  const ButtonTypesGroup({ Key? key, required this.enabled }) : super(key: key);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
   final bool enabled;
 
@@ -63,8 +75,15 @@ class ButtonTypesGroup extends StatelessWidget {
           // 'Filled' type.
           ElevatedButton(
             style: ElevatedButton.styleFrom(
+<<<<<<< HEAD
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
               backgroundColor: Theme.of(context).colorScheme.primary,
+=======
+              // Foreground color
+              onPrimary: Theme.of(context).colorScheme.onPrimary,
+              // Background color
+              primary: Theme.of(context).colorScheme.primary,
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
             ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
             onPressed: onPressed,
             child: const Text('Filled'),
@@ -74,8 +93,15 @@ class ButtonTypesGroup extends StatelessWidget {
           // 'Filled Tonal' type.
           ElevatedButton(
             style: ElevatedButton.styleFrom(
+<<<<<<< HEAD
               foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
               backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+=======
+              // Foreground color
+              onPrimary: Theme.of(context).colorScheme.onSecondaryContainer,
+              // Background color
+              primary: Theme.of(context).colorScheme.secondaryContainer,
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
             ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
             onPressed: onPressed,
             child: const Text('Filled Tonal'),

@@ -25,7 +25,10 @@ final String _targetWithBlockedServiceWorkers = path.join('lib', 'service_worker
 final String _targetPath = path.join(_testAppDirectory, _target);
 
 enum ServiceWorkerTestType {
+<<<<<<< HEAD
   blockedServiceWorkers,
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   withoutFlutterJs,
   withFlutterJs,
   withFlutterJsShort,
@@ -33,6 +36,7 @@ enum ServiceWorkerTestType {
 
 // Run a web service worker test as a standalone Dart program.
 Future<void> main() async {
+<<<<<<< HEAD
   await runWebServiceWorkerTest(headless: false, testType: ServiceWorkerTestType.withoutFlutterJs);
   await runWebServiceWorkerTest(headless: false, testType: ServiceWorkerTestType.withFlutterJs);
   await runWebServiceWorkerTest(headless: false, testType: ServiceWorkerTestType.withFlutterJsShort);
@@ -40,6 +44,11 @@ Future<void> main() async {
   await runWebServiceWorkerTestWithCachingResources(headless: false, testType: ServiceWorkerTestType.withFlutterJs);
   await runWebServiceWorkerTestWithCachingResources(headless: false, testType: ServiceWorkerTestType.withFlutterJsShort);
   await runWebServiceWorkerTestWithBlockedServiceWorkers(headless: false);
+=======
+  await runWebServiceWorkerTest(headless: false, testType: ServiceWorkerTestType.withFlutterJs);
+  await runWebServiceWorkerTest(headless: false, testType: ServiceWorkerTestType.withoutFlutterJs);
+  await runWebServiceWorkerTest(headless: false, testType: ServiceWorkerTestType.withFlutterJsShort);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 }
 
 Future<void> _setAppVersion(int version) async {
@@ -55,9 +64,12 @@ Future<void> _setAppVersion(int version) async {
 String _testTypeToIndexFile(ServiceWorkerTestType type) {
   late String indexFile;
   switch (type) {
+<<<<<<< HEAD
     case ServiceWorkerTestType.blockedServiceWorkers:
       indexFile = 'index_with_blocked_service_workers.html';
       break;
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     case ServiceWorkerTestType.withFlutterJs:
       indexFile = 'index_with_flutterjs.html';
       break;
@@ -71,7 +83,11 @@ String _testTypeToIndexFile(ServiceWorkerTestType type) {
   return indexFile;
 }
 
+<<<<<<< HEAD
 Future<void> _rebuildApp({ required int version, required ServiceWorkerTestType testType, required String target }) async {
+=======
+Future<void> _rebuildApp({ required int version, required ServiceWorkerTestType testType }) async {
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   await _setAppVersion(version);
   await runCommand(
     _flutter,
@@ -197,7 +213,11 @@ Future<void> runWebServiceWorkerTest({
     /////
     // Attempt to load a different version of the service worker!
     /////
+<<<<<<< HEAD
     await _rebuildApp(version: 1, testType: testType, target: _target);
+=======
+    await _rebuildApp(version: 1, testType: testType);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
     print('Call update() on the current web worker');
     await startAppServer(cacheControl: 'max-age=0');
@@ -218,7 +238,11 @@ Future<void> runWebServiceWorkerTest({
     expect(reportedVersion, '1');
     reportedVersion = null;
 
+<<<<<<< HEAD
     await _rebuildApp(version: 2, testType: testType, target: _target);
+=======
+    await _rebuildApp(version: 2, testType: testType);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
     await server!.chrome.reloadPage(ignoreCache: true);
     await waitForAppToLoad(<String, int>{
@@ -235,7 +259,11 @@ Future<void> runWebServiceWorkerTest({
     //////////////////////////////////////////////////////
     // Caching server
     //////////////////////////////////////////////////////
+<<<<<<< HEAD
     await _rebuildApp(version: 1, testType: testType, target: _target);
+=======
+    await _rebuildApp(version: 1, testType: testType);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
     print('With cache: test first page load');
     await startAppServer(cacheControl: 'max-age=3600');
@@ -282,7 +310,11 @@ Future<void> runWebServiceWorkerTest({
     reportedVersion = null;
 
     print('With cache: test page reload after rebuild');
+<<<<<<< HEAD
     await _rebuildApp(version: 2, testType: testType, target: _target);
+=======
+    await _rebuildApp(version: 2, testType: testType);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
     // Since we're caching, we need to ignore cache when reloading the page.
     await server!.chrome.reloadPage(ignoreCache: true);
@@ -312,7 +344,11 @@ Future<void> runWebServiceWorkerTest({
     // Non-caching server
     //////////////////////////////////////////////////////
     print('No cache: test first page load');
+<<<<<<< HEAD
     await _rebuildApp(version: 3, testType: testType, target: _target);
+=======
+    await _rebuildApp(version: 3, testType: testType);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     await startAppServer(cacheControl: 'max-age=0');
     await waitForAppToLoad(<String, int>{
       'CLOSE': 1,
@@ -363,7 +399,11 @@ Future<void> runWebServiceWorkerTest({
     reportedVersion = null;
 
     print('No cache: test page reload after rebuild');
+<<<<<<< HEAD
     await _rebuildApp(version: 4, testType: testType, target: _target);
+=======
+    await _rebuildApp(version: 4, testType: testType);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
     // TODO(yjbanov): when running Chrome with DevTools protocol, for some
     // reason a hard refresh is still required. This works without a hard
@@ -408,6 +448,7 @@ Future<void> runWebServiceWorkerTest({
   }
 
   print('END runWebServiceWorkerTest(headless: $headless, testType: $testType)\n');
+<<<<<<< HEAD
 }
 
 Future<void> runWebServiceWorkerTestWithCachingResources({
@@ -653,4 +694,6 @@ Future<void> runWebServiceWorkerTestWithBlockedServiceWorkers({
     await server?.stop();
   }
   print('END runWebServiceWorkerTestWithBlockedServiceWorkers(headless: $headless)\n');
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 }

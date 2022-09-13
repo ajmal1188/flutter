@@ -1231,6 +1231,7 @@ class ThemeData with Diagnosticable {
   /// {@endtemplate}
   final VisualDensity visualDensity;
 
+<<<<<<< HEAD
   // COLOR
 
   /// A color that contrasts with the [primaryColor], e.g. used as the
@@ -1238,6 +1239,55 @@ class ThemeData with Diagnosticable {
   final Color backgroundColor;
 
   /// The default color of the [BottomAppBar].
+=======
+  /// A temporary flag used to opt-in to Material 3 features.
+  ///
+  /// If true, then components that have been migrated to Material 3 will
+  /// use new colors, typography and other features of Material 3.
+  /// If false, they will use the Material 2 look and feel.
+  ///
+  /// If a [ThemeData] is constructed with [useMaterial3] set to true, then
+  /// some properties will get special defaults. However, just copying a [ThemeData]
+  /// with [useMaterial3] set to true will not change any of these properties in the
+  /// resulting [ThemeData]. These properties are:
+  /// <style>table,td,th { border-collapse: collapse; padding: 0.45em; } td { border: 1px solid }</style>
+  ///
+  /// | Property        | Material 3 default           | Fallback default          |
+  /// | :-------------- | :--------------------------- | :------------------------ |
+  /// | [typography]    | [Typography.material2021]    | [Typography.material2014] |
+  /// | [splashFactory] | [InkSparkle]* or [InkRipple] | [InkSplash]               |
+  ///
+  /// \* if and only if the target platform is Android and the app is not
+  /// running on the web, otherwise it will fallback to [InkRipple].
+  ///
+  /// During the migration to Material 3, turning this on may yield
+  /// inconsistent look and feel in your app. Some components will be migrated
+  /// before others and typography changes will be coming in stages.
+  ///
+  /// [useMaterial3] defaults to false. After all the migrated components
+  /// have landed on stable, we will change this to be true by default. After
+  /// that change has landed on stable, we will deprecate this flag and remove
+  /// all uses of it. Everything will use the Material 3 look and feel at
+  /// that point.
+  ///
+  /// Components that have been migrated to Material 3 are:
+  ///
+  ///   * [AlertDialog]
+  ///   * [AppBar]
+  ///   * [Card]
+  ///   * [Dialog]
+  ///   * [ElevatedButton]
+  ///   * [FloatingActionButton]
+  ///   * [Material]
+  ///   * [NavigationBar]
+  ///   * [NavigationRail]
+  ///   * [OutlinedButton]
+  ///   * [StretchingOverscrollIndicator], replacing the
+  ///     [GlowingOverscrollIndicator]
+  ///   * [TextButton]
+  ///
+  /// See also:
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   ///
   /// This can be overridden by specifying [BottomAppBar.color].
   final Color bottomAppBarColor;

@@ -212,9 +212,14 @@ class InkSparkle extends InteractiveInkFeature {
   }
 
   void _handleStatusChanged(AnimationStatus status) {
+<<<<<<< HEAD
     if (status == AnimationStatus.completed) {
       dispose();
     }
+=======
+    if (status == AnimationStatus.completed)
+      dispose();
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   }
 
   static const Duration _animationDuration = Duration(milliseconds: 617);

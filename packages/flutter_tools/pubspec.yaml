@@ -7,11 +7,19 @@ environment:
 
 dependencies:
   # To update these, use "flutter update-packages --force-upgrade".
+<<<<<<< HEAD
   archive: 3.3.0
   args: 2.3.1
   browser_launcher: 1.1.1
   dds: 2.2.5
   dwds: 15.0.0
+=======
+  archive: 3.1.11
+  args: 2.3.0
+  browser_launcher: 1.1.0
+  dds: 2.2.0
+  dwds: 12.1.1
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   completion: 1.0.0
   coverage: 1.5.0
   crypto: 3.0.2
@@ -103,4 +111,8 @@ dartdoc:
   # Exclude this package from the hosted API docs.
   nodoc: true
 
+<<<<<<< HEAD
 # PUBSPEC CHECKSUM: 5069
+=======
+# PUBSPEC CHECKSUM: 0a1c
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4

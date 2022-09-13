@@ -99,6 +99,7 @@ Future<void> main(List<String> args) async {
   tokens['colorsLight'] = _readTokenFile('color_light.json');
   tokens['colorsDark'] = _readTokenFile('color_dark.json');
 
+<<<<<<< HEAD
   AppBarTemplate('AppBar', '$materialLib/app_bar.dart', tokens).updateFile();
   ButtonTemplate('md.comp.elevated-button', 'ElevatedButton', '$materialLib/elevated_button.dart', tokens).updateFile();
   ButtonTemplate('md.comp.outlined-button', 'OutlinedButton', '$materialLib/outlined_button.dart', tokens).updateFile();
@@ -115,4 +116,17 @@ Future<void> main(List<String> args) async {
   NavigationRailTemplate('NavigationRail', '$materialLib/navigation_rail.dart', tokens).updateFile();
   SurfaceTintTemplate('SurfaceTint', '$materialLib/elevation_overlay.dart', tokens).updateFile();
   TypographyTemplate('Typography', '$materialLib/typography.dart', tokens).updateFile();
+=======
+  AppBarTemplate('$materialLib/app_bar.dart', tokens).updateFile();
+  ButtonTemplate('md.comp.elevated-button', '$materialLib/elevated_button.dart', tokens).updateFile();
+  ButtonTemplate('md.comp.outlined-button', '$materialLib/outlined_button.dart', tokens).updateFile();
+  ButtonTemplate('md.comp.text-button', '$materialLib/text_button.dart', tokens).updateFile();
+  CardTemplate('$materialLib/card.dart', tokens).updateFile();
+  DialogTemplate('$materialLib/dialog.dart', tokens).updateFile();
+  FABTemplate('$materialLib/floating_action_button.dart', tokens).updateFile();
+  NavigationBarTemplate('$materialLib/navigation_bar.dart', tokens).updateFile();
+  NavigationRailTemplate('$materialLib/navigation_rail.dart', tokens).updateFile();
+  SurfaceTintTemplate('$materialLib/elevation_overlay.dart', tokens).updateFile();
+  TypographyTemplate('$materialLib/typography.dart', tokens).updateFile();
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 }

@@ -61,7 +61,11 @@ platform_properties:
       os: Mac-12
       device_type: none
       cpu: x86
+<<<<<<< HEAD
       xcode: 13f17a
+=======
+      xcode: 13a233
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   mac_android:
     properties:
       dependencies: >-
@@ -70,6 +74,7 @@ platform_properties:
           {"dependency": "chrome_and_driver", "version": "version:98.1"},
           {"dependency": "open_jdk", "version": "11"}
         ]
+<<<<<<< HEAD
       os: Mac-12
       cpu: x86
       device_type: "msm8952"
@@ -82,6 +87,14 @@ platform_properties:
         ]
 <<<<<<< HEAD
       os: Mac-12.0
+=======
+<<<<<<< HEAD
+      os: Mac-12.0
+=======
+      os: Mac-12
+      cpu: x86
+>>>>>>> cd41fdd495f6944ecd3506c21e94c6567b073278
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
       device_os: N
 =======
       os: Mac-12
@@ -90,6 +103,21 @@ platform_properties:
 >>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
   mac_ios:
     properties:
+<<<<<<< HEAD
+=======
+      caches: >-
+          [
+            {"name":"builder_mac_devicelab","path":"builder"},
+<<<<<<< HEAD
+            {"name":"chrome_and_driver","path":"chrome"},
+            {"name":"flutter_sdk","path":"flutter sdk"},
+            {"name":"gradle","path":"gradle"},
+            {"name":"openjdk","path":"java"},
+            {"name":"pub_cache","path":".pub-cache"},
+            {"name":"xcode_binary","path":"xcode_binary"},
+            {"name":"osx_sdk","path":"osx_sdk"}
+          ]
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
       dependencies: >-
         [
           {"dependency": "xcode", "version": "13a233"},
@@ -109,6 +137,23 @@ platform_properties:
   mac_arm64_ios:
 >>>>>>> 4f9d92fbbdf072a70a70d2179a9f87392b94104c
     properties:
+<<<<<<< HEAD
+=======
+      caches: >-
+          [
+            {"name":"builder_mac_devicelab","path":"builder"},
+            {"name":"chrome_and_driver","path":"chrome"},
+=======
+            {"name":"chrome_and_driver_96","path":"chrome"},
+>>>>>>> cd41fdd495f6944ecd3506c21e94c6567b073278
+            {"name":"flutter_sdk","path":"flutter sdk"},
+            {"name":"gradle","path":"gradle"},
+            {"name":"openjdk","path":"java11"},
+            {"name":"pub_cache","path":".pub-cache"},
+            {"name":"xcode_binary","path":"xcode_binary"},
+            {"name":"osx_sdk_13a233","path":"osx_sdk"}
+          ]
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
       dependencies: >-
         [
           {"dependency": "xcode", "version": "13a233"},
@@ -118,6 +163,14 @@ platform_properties:
 <<<<<<< HEAD
       os: Mac-12.0
       device_os: iOS-9.3.6
+<<<<<<< HEAD
+=======
+=======
+      os: Mac-12
+      cpu: x86
+      device_os: iOS-15
+>>>>>>> cd41fdd495f6944ecd3506c21e94c6567b073278
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
       xcode: 13a233
 =======
       os: Mac-12
@@ -2119,7 +2172,15 @@ targets:
 
   - name: Linux_android picture_cache_perf__e2e_summary
     recipe: devicelab/devicelab_drone
+<<<<<<< HEAD
     presubmit: false
+=======
+<<<<<<< HEAD
+    bringup: true # Flaky https://github.com/flutter/flutter/issues/93517
+=======
+    presubmit: false
+>>>>>>> cd41fdd495f6944ecd3506c21e94c6567b073278
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     timeout: 60
     properties:
       tags: >

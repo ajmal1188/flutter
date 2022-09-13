@@ -21,9 +21,10 @@ import 'mixins.dart';
 class FlutterTestDebugAdapter extends DartDebugAdapter<FlutterLaunchRequestArguments, FlutterAttachRequestArguments>
     with PidTracker, TestAdapter {
   FlutterTestDebugAdapter(
-    super.channel, {
+    ByteStreamServerChannel channel, {
     required this.fileSystem,
     required this.platform,
+<<<<<<< HEAD
     super.ipv6,
     bool enableDds = true,
     super.enableAuthCodes,
@@ -32,6 +33,19 @@ class FlutterTestDebugAdapter extends DartDebugAdapter<FlutterLaunchRequestArgum
         // Always disable in the DAP layer as it's handled in the spawned
         // 'flutter' process.
         super(enableDds: false);
+=======
+    bool ipv6 = false,
+    bool enableDds = true,
+    bool enableAuthCodes = true,
+    Logger? logger,
+  }) : super(
+    channel,
+    ipv6: ipv6,
+    enableDds: enableDds,
+    enableAuthCodes: enableAuthCodes,
+    logger: logger,
+  );
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
 
   FileSystem fileSystem;
   Platform platform;

@@ -154,6 +154,7 @@ class FakeProcess implements io.Process {
       _completer = completer
   {
     if (_stderr.isEmpty) {
+<<<<<<< HEAD
       this.stderr = const Stream<List<int>>.empty();
     } else if (outputFollowsExit) {
       // Wait for the process to exit before emitting stderr.
@@ -177,6 +178,27 @@ class FakeProcess implements io.Process {
       }));
     } else {
       this.stdout = Stream<List<int>>.value(_stdout);
+=======
+      stderr = const Stream<List<int>>.empty();
+    } else if (outputFollowsExit) {
+      // Wait for the process to exit before emitting stderr.
+      stderr = Stream<List<int>>.fromFuture(exitCode.then((_) {
+        return Future<List<int>>(() => _stderr);
+      }));
+    } else {
+      stderr = Stream<List<int>>.value(_stderr);
+    }
+
+    if (_stdout.isEmpty) {
+      stdout = const Stream<List<int>>.empty();
+    } else if (outputFollowsExit) {
+      // Wait for the process to exit before emitting stdout.
+      stdout = Stream<List<int>>.fromFuture(exitCode.then((_) {
+        return Future<List<int>>(() => _stdout);
+      }));
+    } else {
+      stdout = Stream<List<int>>.value(_stdout);
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     }
   }
 
@@ -192,7 +214,10 @@ class FakeProcess implements io.Process {
   @override
   final int pid;
 
+<<<<<<< HEAD
   /// The raw byte content of stderr.
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   final List<int> _stderr;
 
   @override
@@ -204,7 +229,10 @@ class FakeProcess implements io.Process {
   @override
   late final Stream<List<int>> stdout;
 
+<<<<<<< HEAD
   /// The raw byte content of stdout.
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   final List<int> _stdout;
 
   @override
@@ -287,6 +315,7 @@ abstract class FakeProcessManager implements ProcessManager {
     if (fakeCommand.onRun != null) {
       fakeCommand.onRun!();
     }
+<<<<<<< HEAD
     return FakeProcess(
       duration: fakeCommand.duration,
       exitCode: fakeCommand.exitCode,
@@ -296,6 +325,17 @@ abstract class FakeProcessManager implements ProcessManager {
       stdout: encoding?.encode(fakeCommand.stdout) ?? fakeCommand.stdout.codeUnits,
       completer: fakeCommand.completer,
       outputFollowsExit: fakeCommand.outputFollowsExit,
+=======
+    return _FakeProcess(
+      fakeCommand.exitCode,
+      fakeCommand.duration,
+      _pid,
+      encoding?.encode(fakeCommand.stderr) ?? fakeCommand.stderr.codeUnits,
+      fakeCommand.stdin,
+      encoding?.encode(fakeCommand.stdout) ?? fakeCommand.stdout.codeUnits,
+      fakeCommand.completer,
+      fakeCommand.outputFollowsExit,
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
     );
   }
 

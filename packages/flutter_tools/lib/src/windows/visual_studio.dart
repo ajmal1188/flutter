@@ -299,8 +299,14 @@ class VisualStudio {
         ...requirementArguments,
       ], encoding: encoding);
       if (whereResult.exitCode == 0) {
+<<<<<<< HEAD
         final List<Map<String, dynamic>>? installations = _tryDecodeVswhereJson(whereResult.stdout);
         if (installations != null && installations.isNotEmpty) {
+=======
+        final List<Map<String, dynamic>> installations =
+            (json.decode(whereResult.stdout) as List<dynamic>).cast<Map<String, dynamic>>();
+        if (installations.isNotEmpty) {
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
           return VswhereDetails.fromJson(validateRequirements, installations[0]);
         }
       }
@@ -312,6 +318,7 @@ class VisualStudio {
     return null;
   }
 
+<<<<<<< HEAD
   List<Map<String, dynamic>>? _tryDecodeVswhereJson(String vswhereJson) {
     List<dynamic>? result;
     FormatException? originalError;
@@ -343,6 +350,8 @@ class VisualStudio {
     return result.cast<Map<String, dynamic>>();
   }
 
+=======
+>>>>>>> 81bb12cdc1919ed717a66e4a3a2a020c8234d6c4
   /// Returns the details of the best available version of Visual Studio.
   ///
   /// If there's a version that has all the required components, that
